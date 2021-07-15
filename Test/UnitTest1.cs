@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -39,7 +40,7 @@ namespace RestAPI
             var client = new RestClient("http://localhost:3000/");
             var request = new RestRequest("posts/{postid}/profile", Method.POST);
 
-            request.AddJsonBody(new { name = "Jackie" });
+            request.AddJsonBody(new { name = "Jackie" })    ;
             request.AddUrlSegment("postid", 1);
             var response = client.Execute(request);
 
@@ -120,7 +121,6 @@ namespace RestAPI
                  taskCompletionSource.SetResult(restResponce);
              });
             return await taskCompletionSource.Task;
-
-        }
-    }
+            }
+       }
 }
