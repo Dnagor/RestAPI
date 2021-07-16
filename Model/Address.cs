@@ -8,7 +8,7 @@ namespace RestAPI.Model
         public string suite { get; set; }
         public string city { get; set; }
         public string zipcode { get; set; }
-        public List<Geo> geo { get; set; }
+        public Geo geo { get; set; }
 
     }
 }

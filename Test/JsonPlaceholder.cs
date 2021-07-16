@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestAPI.Model;
 using RestSharp;
@@ -28,7 +30,7 @@ namespace RestAPI.Test
             request.AddUrlSegment("user", 3);
             var response = client.Execute<User>(request);
             Assert.AreEqual("ramiro.info", response.Data.website, "Websites are not equal");
-            Assert.AreEqual("-68.6102", response.Data.address[0].geo[0].lat, "lattitude is not equal");
+            Assert.AreEqual("-68.6102", response.Data.address.geo.lat, "lattitude is not equal");
         }
         [TestMethod]
         public void CompareCompanyNameTest()
@@ -39,7 +41,16 @@ namespace RestAPI.Test
             var response = client.Execute(request);
             User user = new JsonDeserializer().
                 Deserialize<User>(response);
-            Assert.AreEqual("Keebler LLC", user.company[0].name, "Smt went wrong.");
+            Assert.AreEqual("Keebler LLC", user.company.name, "Smth went wrong.");
+        }
+        [TestMethod]
+        public void SearchForValueTest()
+        {
+            var client = new RestClient("https://jsonplaceholder.typicode.com/");
+            var request = new RestRequest("users", Method.GET);
+            var response = client.Execute(request);
+    
+            Assert.AreEqual("Keebler LLC", "sdfs", "Smt went wrong.");
         }
     }
 }
