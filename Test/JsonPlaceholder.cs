@@ -44,13 +44,19 @@ namespace RestAPI.Test
             Assert.AreEqual("Keebler LLC", user.company.name, "Smth went wrong.");
         }
         [TestMethod]
-        public void SearchForValueTest()
+        //in this test we take all data and check for unique value
+        public void GetfromAllTest()
         {
             var client = new RestClient("https://jsonplaceholder.typicode.com/");
             var request = new RestRequest("users", Method.GET);
-            var response = client.Execute(request);
-    
-            Assert.AreEqual("Keebler LLC", "sdfs", "Smt went wrong.");
+            var response = client.Execute<List<User>>(request);
+            bool flag = false;
+            foreach (User item in response.Data)
+            {
+                if(item.address.zipcode.Equals("31428-2261"))
+                    flag = true;
+            }
+            Assert.IsTrue(flag, "There is no user with such zipcode.");
         }
     }
 }
